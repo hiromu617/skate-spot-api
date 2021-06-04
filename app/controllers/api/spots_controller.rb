@@ -1,6 +1,41 @@
 class Api::SpotsController < ApplicationController
+  # protect_from_forgery
+
   def index
     @spots = Spot.all
     render json: @spots
+  end
+
+  def show
+    @spot = Spot.find(params[:id])
+    render json: @spot
+  end
+  
+  def create
+    binding.pry
+    @spot = Spot.new(
+      name: spot_params[:name],
+    )
+
+    # @user = User.find_by(uid: params[:uid])
+
+    # @spot.user_id = @user.id
+
+    if @spot.save
+      render json: @spot
+    else
+      render json: @spot.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @spot = spot.find(params[:id])
+    @spot.destroy
+  end
+
+  private
+  
+  def spot_params
+    params.require(:spot).permit(:name)
   end
 end

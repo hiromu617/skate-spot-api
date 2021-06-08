@@ -13,9 +13,7 @@ class Api::SpotsController < ApplicationController
   
   def create
     binding.pry
-    @spot = Spot.new(
-      name: spot_params[:name],
-    )
+    @spot = Spot.new(spot_params)
 
     # @user = User.find_by(uid: params[:uid])
 
@@ -36,6 +34,6 @@ class Api::SpotsController < ApplicationController
   private
   
   def spot_params
-    params.require(:spot).permit(:name)
+    params.require(:spot).permit(:name, :description, :prefectures, :lat, :lng, :user_id)
   end
 end

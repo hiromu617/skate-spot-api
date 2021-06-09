@@ -12,7 +12,7 @@ class Api::SpotsController < ApplicationController
   end
   
   def create
-    binding.pry
+    # binding.pry
     @spot = Spot.new(spot_params)
 
     # @user = User.find_by(uid: params[:uid])

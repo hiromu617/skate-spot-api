@@ -2,7 +2,7 @@ class Api::SpotsController < ApplicationController
   # protect_from_forgery
 
   def index
-    @spots = Spot.all
+    @spots = Spot.all.order(created_at: "DESC")
     render json: @spots
   end
 

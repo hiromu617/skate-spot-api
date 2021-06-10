@@ -2,8 +2,14 @@ class Api::SpotsController < ApplicationController
   # protect_from_forgery
 
   def index
-    @spots = Spot.all.order(created_at: "DESC")
-    render json: @spots
+    spots = Spot.all.order(created_at: "DESC").page(params[:page]).per(3)
+
+    if spots.nil?
+      render nil
+      return
+    end
+    
+    render json: spots
   end
 
   def show

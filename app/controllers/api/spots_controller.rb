@@ -1,5 +1,6 @@
 class Api::SpotsController < ApplicationController
   # protect_from_forgery
+  ActiveModel::Serializer.config.adapter = :json
 
   def index
     spots = Spot.all.order(created_at: "DESC").page(params[:page]).per(3)
@@ -8,8 +9,8 @@ class Api::SpotsController < ApplicationController
       render nil
       return
     end
-    
-    render json: spots
+    puts spots.total_pages
+    render json: spots, meta: { totalPages: spots.total_pages }
   end
 
   def show

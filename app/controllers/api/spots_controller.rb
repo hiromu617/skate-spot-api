@@ -33,6 +33,19 @@ class Api::SpotsController < ApplicationController
     end
   end
 
+  def update
+    # binding.pry
+    @spot = Spot.find(params[:id])
+    if !@spot 
+      return 
+    end
+    if @spot.update(spot_params)
+      render json: @spot
+    else
+      render json: @spot.errors, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     @spot = spot.find(params[:id])
     @spot.destroy

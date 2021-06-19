@@ -15,7 +15,7 @@ class Api::SpotsController < ApplicationController
 
   def show
     @spot = Spot.find(params[:id])
-    render json: @spot
+    render json: @spot, include: ['user', 'reviews' ,'reviews.user']
   end
   
   def create

@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_08_152428) do
+ActiveRecord::Schema.define(version: 2021_06_19_135733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "spot_id", null: false
+    t.float "rating", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "content", null: false
+    t.index ["spot_id"], name: "index_reviews_on_spot_id"
+    t.index ["user_id", "spot_id"], name: "index_reviews_on_user_id_and_spot_id", unique: true
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
 
   create_table "spots", force: :cascade do |t|
     t.string "name"
@@ -24,6 +36,7 @@ ActiveRecord::Schema.define(version: 2021_06_08_152428) do
     t.string "prefectures", null: false
     t.float "lat", null: false
     t.float "lng", null: false
+    t.float "score", default: 0.0
     t.index ["user_id"], name: "index_spots_on_user_id"
   end
 
@@ -36,5 +49,7 @@ ActiveRecord::Schema.define(version: 2021_06_08_152428) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
+  add_foreign_key "reviews", "spots"
+  add_foreign_key "reviews", "users"
   add_foreign_key "spots", "users"
 end

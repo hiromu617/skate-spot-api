@@ -6,9 +6,9 @@ class Api::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by(uid: params[:uid])
+    @user = User.find(params[:id])
     if @user
-      render json: @user
+      render json: @user, include: ['spots', 'reviews' ,'reviews.user','spots.user','spots.reviews']
     else
       render json: nil
     end

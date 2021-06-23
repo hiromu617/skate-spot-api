@@ -34,7 +34,7 @@ class Api::UsersController < ApplicationController
 
   def update
     # binding.pry
-    @user = User.find_by(uid: params[:uid])
+    @user = User.find(params[:id])
     if !@user 
       return 
     end

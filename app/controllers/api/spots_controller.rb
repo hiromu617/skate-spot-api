@@ -2,14 +2,21 @@ class Api::SpotsController < ApplicationController
   # protect_from_forgery
   ActiveModel::Serializer.config.adapter = :json
 
+  #最新の投稿を返す
+  def top
+    spots = Spot.all.order(created_at: "DESC").limit(4).as_json(include: ['user', 'reviews'])
+    reviews = Review.all.order(created_at: "DESC").limit(4).as_json(include: ['user', 'spot'])
+    render json: {spots: spots, reviews: reviews}
+  end
+
   def index
-    spots = Spot.all.order(created_at: "DESC").page(params[:page]).per(3)
+    spots = Spot.all.order(created_at: "DESC").page(params[:page]).per(10)
 
     if spots.nil?
       render nil
       return
     end
-    puts spots.total_pages
+
     render json: spots, meta: { totalPages: spots.total_pages }
   end
 

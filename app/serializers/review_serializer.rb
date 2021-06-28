@@ -1,5 +1,5 @@
 class ReviewSerializer < ActiveModel::Serializer
   attributes :id, :rating, :content, :created_at
   belongs_to :user
-  belongs_to :review
+  belongs_to :spot
 end

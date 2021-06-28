@@ -8,7 +8,7 @@ class Api::UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     if @user
-      render json: @user, include: ['spots', 'reviews' ,'reviews.user','spots.user','spots.reviews']
+      render json: @user, include: ['spots', 'reviews' ,'reviews.user','reviews.spot','spots.user','spots.reviews']
     else
       render json: nil
     end

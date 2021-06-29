@@ -9,6 +9,11 @@ class Api::SpotsController < ApplicationController
     render json: {spots: spots, reviews: reviews}
   end
 
+  def map
+    spots = Spot.all
+    render json: spots
+  end
+
   def index
     spots = Spot.all.order(created_at: "DESC").page(params[:page]).per(10)
 

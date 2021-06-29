@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   get '/api/top', to: 'api/spots#top'
 
   namespace 'api' do
-    resources :spots
+    resources :spots do
+      collection do
+        get 'map'
+      end
+    end
     resources :reviews, only: [:create, :destroy]
     resources :users
   end
